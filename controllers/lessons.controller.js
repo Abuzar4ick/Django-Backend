@@ -32,6 +32,19 @@ exports.getLessons = asyncHandle(async (req, res, next) => {
 })
 
 // Router: /lessons/:id
+// Method: GET
+// Description: Get lesson by id
+exports.oneLesson = asyncHandle(async (req, res, next) => {
+    const { id } = req.params
+    const findLesson = await lessonSchema.findById(id)
+    if (!findLesson) return next(new ErrorResponse('Lesson not found', 404));
+    res.status(200).json({
+        success: true,
+        data: findLesson
+    })
+})
+
+// Router: /lessons/:id
 // Method: PATCH
 // Description: Update lesson
 exports.updateLesson = asyncHandle(async (req, res, next) => {

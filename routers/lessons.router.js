@@ -4,7 +4,8 @@ const {
     newLesson,
     getLessons,
     updateLesson,
-    deleteLesson
+    deleteLesson,
+    oneLesson
 } = require('../controllers/lessons.controller')
 const adminAuth = require('../middlewares/adminAuth')
 const { body, param, validationResult } = require('express-validator')
@@ -27,7 +28,21 @@ router.post('/lessons/:id', adminAuth, [
         next()
     }
 ], newLesson)
-router.get('/lessons', adminAuth, getLessons)
+router.get('/lessons', getLessons)
+router.get('/lessons/:id', [
+    param('id')
+        .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
+    (req, res, next) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array()
+            })
+        }
+        next()
+    }
+], oneLesson)
 router.patch('/lessons/:id', adminAuth, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
