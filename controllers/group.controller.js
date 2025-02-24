@@ -35,11 +35,10 @@ exports.getGroups = asyncHandle(async (req, res, next) => {
 // Description: Get group by id and all users by groupId
 exports.oneGroup = asyncHandle(async (req, res, next) => {
     const { id } = req.params
-
     const findGroup = await groupSchema.findById(id)
     if (!findGroup) return next(new ErrorResponse('Group not found.', 404));
 
-    const users = await userSchema.find({ groupId: findGroup.groupId })
+    const users = await userSchema.find({ groupId: findGroup._id })
     res.status(200).json({
         success: true,
         group: findGroup,

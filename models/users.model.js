@@ -14,7 +14,7 @@ const userSchema = new Schema({
         required: true
     },
     direction: {
-        type: [String],
+        type: String,
         enum: ['Frontend', 'Backend', 'Design', 'Python'],
         required: true
     },
