@@ -45,3 +45,24 @@ exports.oneGroup = asyncHandle(async (req, res, next) => {
         users
     })
 })
+
+exports.deleteGroup = asyncHandle(async (req, res, next) => {
+    const { id } = req.params
+    const deletedGroup = await groupSchema.findByIdAndDelete(id)
+    if (!deletedGroup) return next(new ErrorResponse('Group not found.', 404));
+    res.status(200).json({
+        success: true,
+        message: 'Group successfully deleted.'
+    })
+})
+
+exports.updateGroup = asyncHandle(async (req, res, next) => {
+    const { id } = req.params
+    const { title, direction } = req.body
+    const updatedGroup = await groupSchema.findByIdAndUpdate(id, { title, direction })
+    if (!updatedGroup) return next(new ErrorResponse('Group not found.', 404));
+    res.status(200).json({
+        success: true,
+        message: 'Group successfully updated.'
+    })
+})
