@@ -9,7 +9,8 @@ exports.userRegister = asyncHandle(async (req, res, next) => {
     const { first_name, last_name, phone_number, direction, groupId, telegram_id } = req.body
 
     const findUser = await userSchema.findOne({ phone_number })
-    if (findUser) return next(new ErrorResponse('User already exist.', 400));
+    const findByTelegram = await userSchema.findOne({ telegram_id })
+    if (findUser || findByTelegram) return next(new ErrorResponse('User already exist.', 400));
 
     await userSchema.create({
         first_name,
