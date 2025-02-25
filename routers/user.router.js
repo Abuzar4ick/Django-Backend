@@ -3,7 +3,8 @@ const router = Router()
 const {
     userRegister,
     getUsers,
-    deleteUser
+    deleteUser,
+    oneUser
 } = require('../controllers/user.controller')
 const adminAuth = require('../middlewares/adminAuth')
 const { body, param, validationResult } = require('express-validator')
@@ -47,5 +48,6 @@ router.delete('/users/:id', adminAuth, [
         next()
     }
 ], deleteUser)
+router.get('/users/:id', adminAuth, oneUser)
 
 module.exports = router

@@ -48,3 +48,16 @@ exports.deleteUser = asyncHandle(async (req, res, next) => {
         message: 'User deleted successfully.'
     })
 })
+
+// Router: /users/:id
+// Method: GET
+// Description: Get user by id
+exports.oneUser = asyncHandle(async (req, res, next) => {
+    const { id } = req.params
+    const data = await userSchema.findById(id)
+    if (!data) return next(new ErrorResponse('User not found', 404));
+    res.status(200).json({
+        success: true,
+        data
+    })
+})
