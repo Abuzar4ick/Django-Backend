@@ -9,8 +9,8 @@ const asyncHandle = require('../middlewares/async')
 exports.newGroup = asyncHandle(async (req, res, next) => {
     const { title, direction } = req.body
 
-    const findGroup = await groupSchema.findOne({ title })
-    if (findGroup) return next(new ErrorResponse('Group with this title already created', 400))
+    const findGroup = await groupSchema.findOne({ title, direction })
+    if (findGroup) return next(new ErrorResponse('Group with this title and direction already created', 400))
 
     await groupSchema.create({ title, direction })
     res.status(201).json({
