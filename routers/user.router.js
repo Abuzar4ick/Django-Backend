@@ -48,6 +48,19 @@ router.delete('/users/:id', adminAuth, [
         next()
     }
 ], deleteUser)
-router.get('/users/:id', adminAuth, oneUser)
+router.get('/users/:id', adminAuth, [
+    param('id')
+        .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
+    (req, res, next) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array()
+            })
+        }
+        next()
+    }
+], oneUser)
 
 module.exports = router
