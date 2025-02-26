@@ -3,7 +3,7 @@ const router = Router()
 const { adminRegister } = require('../controllers/register.controller')
 const { body, validationResult } = require('express-validator')
 
-router.post('/admin/register', [
+router.post('/register', [
     body('username')
         .notEmpty().withMessage('Please, enter username.'),
     body('password')
