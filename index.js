@@ -1,20 +1,27 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
 require('dotenv').config()
+const express = require('express')
+const cors = require('cors')
+const helmet = require('helmet')
+const connectMongo = require('./config/db')
+const error = require('./middlewares/error')
+const app = express()
 
+// Middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cors({
-    origin: '*',
-    methods: '*',
-    allowedHeaders: '*'
+app.use(helmet({
+    contentSecurityPolicy: false
 }))
 
-// Mongodb connection
-const connectMongo = require('./config/db')
-connectMongo()
+// CORS
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
 
+// Connect to MongoDB
+connectMongo()
 app.use('/api',
     require('./routers/register.router'),
     require('./routers/lessons.router'),
@@ -22,13 +29,11 @@ app.use('/api',
     require('./routers/user.router')
 )
 
-// Handle error
-const error = require('./middlewares/error')
 app.use(error)
 
 // Listen the server
 const PORT = process.env.PORT || 4000
-app.listen(PORT, err => {
-    if (err) console.log(`Server listening error: ${err}`)
+app.listen(PORT, (err) => {
+    if (err) console.error(`Server listening error: ${err}`)
         console.log(`Server listening on port ${PORT}`)
 })
