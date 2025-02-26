@@ -28,7 +28,7 @@ app.use('/api',
     require('./routers/group.router'),
     require('./routers/user.router')
 )
-app.use('/api/register', registerLimiter, require('./routers/register.router'))
+app.use('/api/admin', registerLimiter, require('./routers/register.router'))
 
 app.use(error)
 
