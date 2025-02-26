@@ -1,5 +1,6 @@
 const groupSchema = require('../models/group.model')
 const userSchema = require('../models/users.model')
+const lessonSchema = require('../models/lessons.model')
 const ErrorResponse = require('../utils/errorResponse')
 const asyncHandle = require('../middlewares/async')
 
@@ -50,6 +51,8 @@ exports.deleteGroup = asyncHandle(async (req, res, next) => {
     const { id } = req.params
     const deletedGroup = await groupSchema.findByIdAndDelete(id)
     if (!deletedGroup) return next(new ErrorResponse('Group not found.', 404));
+
+    await lessonSchema.deleteMany({ groupId: id })
     res.status(200).json({
         success: true,
         message: 'Group successfully deleted.'
