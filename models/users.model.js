@@ -21,11 +21,7 @@ const userSchema = new Schema({
     groupId: {
         type: Schema.Types.ObjectId,
         ref: 'Group',
-        required: true
-    },
-    is_active: {
-        type: Boolean,
-        default: false
+        default: null
     },
     telegram_id: {
         type: String,

@@ -52,6 +52,7 @@ exports.deleteGroup = asyncHandle(async (req, res, next) => {
     const deletedGroup = await groupSchema.findByIdAndDelete(id)
     if (!deletedGroup) return next(new ErrorResponse('Group not found.', 404));
 
+    await userSchema.updateMany({ groupId: id }, { groupId: null })
     await lessonSchema.deleteMany({ groupId: id })
     res.status(200).json({
         success: true,
