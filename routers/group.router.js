@@ -6,7 +6,8 @@ const {
     oneGroup,
     deleteGroup,
     updateGroup,
-    updateGroupStatus
+    updateGroupStatus,
+    updateUsers
 } = require('../controllers/group.controller')
 const adminAuth = require('../middlewares/adminAuth')
 const { body, param, validationResult } = require('express-validator')
@@ -91,6 +92,22 @@ router.patch('/groups/:id/status', adminAuth, [
         next()
     }
 ], updateGroupStatus)
-
+router.patch('/groups/:id/users', adminAuth, [
+    check('id').isMongoId().withMessage('Invalid group ID'),
+    check('users')
+        .isArray({ min: 1 }).withMessage('Users must be an array with at least one user ID')
+        .custom((users) => users.every(userId => typeof userId === 'string' && /^[0-9a-fA-F]{24}$/.test(userId)))
+        .withMessage('Each user ID must be a valid MongoDB ObjectId'),
+    (req, res, next) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array()
+            })
+        }
+        next()
+    }
+], updateUsers)
 
 module.exports = router
