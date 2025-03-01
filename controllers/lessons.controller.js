@@ -77,7 +77,7 @@ exports.deleteLesson = asyncHandle(async (req, res, next) => {
 // Method: GET
 // Description: Get userId: null users
 exports.getUserNullLesson = asyncHandle(async (req, res, next) => {
-    const data = await lessonSchema.find({ userId: null })
+    const data = await lessonSchema.find({ groupId: null })
     res.status(200).json({
         success: true,
         data
