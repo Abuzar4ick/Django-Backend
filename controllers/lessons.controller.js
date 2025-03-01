@@ -72,3 +72,14 @@ exports.deleteLesson = asyncHandle(async (req, res, next) => {
         message: 'Lesson deleted successfully.'
     })
 })
+
+// Router: /lessons/:id
+// Method: GET
+// Description: Get userId: null users
+exports.getUserNullLesson = asyncHandle(async (req, res, next) => {
+    const data = await lessonSchema.find({ userId: null })
+    res.status(200).json({
+        success: true,
+        data
+    })
+})
