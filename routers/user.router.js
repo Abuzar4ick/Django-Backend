@@ -20,9 +20,6 @@ router.post('/user/register', adminAuth, [
         .isMobilePhone().withMessage('Invalid phone number'),
     body('direction')
         .notEmpty().withMessage('Direction is required'),
-    body('groupId')
-        .notEmpty().withMessage('Group id is required')
-        .isMongoId().withMessage('Invalid group ID'),
     body('telegram_id')
         .notEmpty().withMessage('Telegram id is required')
         .optional().isNumeric().withMessage('Telegram ID must be numeric'),
