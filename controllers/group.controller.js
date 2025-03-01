@@ -47,6 +47,9 @@ exports.oneGroup = asyncHandle(async (req, res, next) => {
     })
 })
 
+// Router: /groups/:id
+// Method: DELETE
+// Description: Delete group by id
 exports.deleteGroup = asyncHandle(async (req, res, next) => {
     const { id } = req.params
     const deletedGroup = await groupSchema.findByIdAndDelete(id)
@@ -60,6 +63,9 @@ exports.deleteGroup = asyncHandle(async (req, res, next) => {
     })
 })
 
+// Router: /groups/:id
+// Method: PATCH
+// Description: Update group by id
 exports.updateGroup = asyncHandle(async (req, res, next) => {
     const { id } = req.params
     const { title, direction } = req.body
@@ -68,5 +74,19 @@ exports.updateGroup = asyncHandle(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: 'Group successfully updated.'
+    })
+})
+
+// Router: /groups/:id/status
+// Method: PATCH
+// Description: Update status of group: ['pending', 'active', 'completed']
+exports.updateGroupStatus = asyncHandle(async (req, res, next) => {
+    const { id } = req.params
+    const { status } = req.body
+    const updatedGroup = await groupSchema.findByIdAndUpdate(id, { status })
+    if (!updatedGroup) return next(new ErrorResponse('Group not found', 404));
+    res.status(200).json({
+        success: true,
+        message: 'Status of group successfully updated.'
     })
 })

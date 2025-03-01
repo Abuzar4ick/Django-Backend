@@ -5,7 +5,8 @@ const {
     getGroups,
     oneGroup,
     deleteGroup,
-    updateGroup
+    updateGroup,
+    updateGroupStatus
 } = require('../controllers/group.controller')
 const adminAuth = require('../middlewares/adminAuth')
 const { body, param, validationResult } = require('express-validator')
@@ -73,5 +74,22 @@ router.patch('/groups/:id', adminAuth, [
         next()
     }
 ], updateGroup)
+router.patch('/groups/:id/status', adminAuth, [
+    param('id')
+        .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
+    body('status')
+        .isIn(['pending', 'active', 'completed'])
+        .withMessage('Invalid status, allowed values: pending, active, completed'),
+    (req, res, next) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array()
+            })
+        }
+        next()
+    }
+], updateGroupStatus)
 
 module.exports = router

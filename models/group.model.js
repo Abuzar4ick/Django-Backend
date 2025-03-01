@@ -9,6 +9,11 @@ const groupSchema = new Schema({
         type: String,
         enum: ['Frontend', 'Backend', 'Design', 'Python'],
         required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'active', 'completed'],
+        default: 'pending',
     }
 })
 
