@@ -73,7 +73,7 @@ exports.deleteLesson = asyncHandle(async (req, res, next) => {
     })
 })
 
-// Router: /lessons/:id
+// Router: /lessons/null
 // Method: GET
 // Description: Get userId: null users
 exports.getUserNullLesson = asyncHandle(async (req, res, next) => {

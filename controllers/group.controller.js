@@ -90,3 +90,23 @@ exports.updateGroupStatus = asyncHandle(async (req, res, next) => {
         message: 'Status of group successfully updated.'
     })
 })
+
+// Router: /groups/:id/users
+// Method: PATCH
+// Description: Update groupId of users
+exports.updateUsers = asyncHandle(async (req, res, next) => {
+    const { id } = req.params
+    const { users } = req.body
+
+    const findGroup = await groupSchema.findById(id)
+    if (!findGroup) return next(new ErrorResponse('Group not found', 404));
+
+    await Promise.all(users.map((userId) => 
+        userSchema.findByIdAndUpdate(userId, { groupId: id })
+    ))
+
+    res.status(200).json({
+        success: true,
+        message: 'Users added successfully.'
+    })
+})
