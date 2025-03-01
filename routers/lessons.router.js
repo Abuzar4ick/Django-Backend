@@ -28,8 +28,8 @@ router.post('/lessons/:id', adminAuth, [
         next()
     }
 ], newLesson)
-router.get('/lessons', getLessons)
-router.get('/lessons/:id', [
+router.get('/lessons', adminAuth, getLessons)
+router.get('/lessons/:id', adminAuth, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     (req, res, next) => {

@@ -10,7 +10,7 @@ const {
 const adminAuth = require('../middlewares/adminAuth')
 const { body, param, validationResult } = require('express-validator')
 
-router.post('/user/register', [
+router.post('/user/register', adminAuth, [
     body('first_name')
         .notEmpty().withMessage('First name is required'),
     body('last_name')
@@ -66,7 +66,7 @@ router.get('/users/:id', adminAuth, [
         next()
     }
 ], oneUser)
-router.patch('/users/:id', [
+router.patch('/users/:id', adminAuth, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     body('groupId')

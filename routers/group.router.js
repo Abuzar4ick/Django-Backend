@@ -27,7 +27,7 @@ router.post('/groups', adminAuth, [
         next()
     }
 ], newGroup)
-router.get('/groups',  getGroups)
+router.get('/groups', adminAuth, getGroups)
 router.get('/groups/:id', [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
