@@ -7,22 +7,25 @@ const asyncHandle = require('../middlewares/async')
 // Method: POST
 // Description: Add new lesson
 exports.newLesson = asyncHandle(async (req, res, next) => {
-    const { title, link, id } = req.body
+    const { title, link, id, direction: bodyDirection } = req.body
 
     let groupId = null
+    let direction = bodyDirection
+
     if (id) {
         const findGroup = await groupSchema.findById(id)
         if (!findGroup) return next(new ErrorResponse('Group not found', 404))
+
+        direction = findGroup.direction
         groupId = id
     }
 
-    await lessonSchema.create({ title, link, groupId })
+    await lessonSchema.create({ title, link, groupId, direction })
     res.status(201).json({
         success: true,
         message: "Lesson successfully created."
     })
 })
-
 
 // Router: /lessons
 // Method: GET

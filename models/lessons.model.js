@@ -13,6 +13,11 @@ const lessonSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Group',
         default: null
+    },
+    direction: {
+        type: String,
+        enum: ['Frontend', 'Backend', 'Design', 'Python'],
+        required: true
     }
 })
 
