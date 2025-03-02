@@ -12,8 +12,6 @@ const adminAuth = require('../middlewares/adminAuth')
 const { body, param, validationResult } = require('express-validator')
 
 router.post('/lessons/:id', adminAuth, [
-    param('id')
-        .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     body('title')
         .isLength({ min: 1 }).withMessage('The lesson title must contain at least one letter'),
     body('link')
