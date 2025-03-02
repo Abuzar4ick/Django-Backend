@@ -11,7 +11,7 @@ const {
 const adminAuth = require('../middlewares/adminAuth')
 const { body, param, validationResult } = require('express-validator')
 
-router.post('/lessons/:id', adminAuth, [
+router.post('/lessons', adminAuth, [
     body('title')
         .isLength({ min: 1 }).withMessage('The lesson title must contain at least one letter'),
     body('link')
