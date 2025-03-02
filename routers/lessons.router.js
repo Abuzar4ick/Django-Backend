@@ -74,6 +74,6 @@ router.delete('/lessons/:id', adminAuth, [
         next()
     }
 ], deleteLesson)
-router.get('/lessons/null', adminAuth, getUserNullLesson)
+router.get('/free/lessons', adminAuth, getUserNullLesson)
 
 module.exports = router
