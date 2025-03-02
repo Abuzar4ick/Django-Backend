@@ -93,8 +93,8 @@ router.patch('/groups/:id/status', adminAuth, [
     }
 ], updateGroupStatus)
 router.patch('/groups/:id/users', adminAuth, [
-    check('id').isMongoId().withMessage('Invalid group ID'),
-    check('users')
+    body('id').isMongoId().withMessage('Invalid group ID'),
+    body('users')
         .isArray({ min: 1 }).withMessage('Users must be an array with at least one user ID')
         .custom((users) => users.every(userId => typeof userId === 'string' && /^[0-9a-fA-F]{24}$/.test(userId)))
         .withMessage('Each user ID must be a valid MongoDB ObjectId'),

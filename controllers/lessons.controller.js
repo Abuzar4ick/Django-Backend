@@ -73,10 +73,10 @@ exports.deleteLesson = asyncHandle(async (req, res, next) => {
     })
 })
 
-// Router: /lessons/null
+// Router: /free/lessons
 // Method: GET
 // Description: Get userId: null users
-exports.getUserNullLesson = asyncHandle(async (req, res, next) => {
+exports.getFreeLessons = asyncHandle(async (req, res, next) => {
     const data = await lessonSchema.find({ groupId: null })
     res.status(200).json({
         success: true,

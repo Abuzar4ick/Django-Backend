@@ -6,7 +6,7 @@ const {
     updateLesson,
     deleteLesson,
     oneLesson,
-    getUserNullLesson
+    getFreeLessons
 } = require('../controllers/lessons.controller')
 const adminAuth = require('../middlewares/adminAuth')
 const { body, param, validationResult } = require('express-validator')
@@ -74,6 +74,6 @@ router.delete('/lessons/:id', adminAuth, [
         next()
     }
 ], deleteLesson)
-router.get('/free/lessons', adminAuth, getUserNullLesson)
+router.get('/free/lessons', adminAuth, getFreeLessons)
 
 module.exports = router
