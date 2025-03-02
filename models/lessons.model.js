@@ -12,7 +12,7 @@ const lessonSchema = new Schema({
     groupId: {
         type: Schema.Types.ObjectId,
         ref: 'Group',
-        required: true
+        default: null
     }
 })
 
