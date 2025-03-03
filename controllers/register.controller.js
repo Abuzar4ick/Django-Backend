@@ -1,7 +1,7 @@
 const asyncHandle = require('../middlewares/async')
 const ErrorResponse = require('../utils/errorResponse')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 // process.env
 const { ADMIN_USERNAME, ADMIN_PASSWORD, JWT_SECRET, JWT_EXPIRE } = process.env
