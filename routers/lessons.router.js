@@ -16,9 +16,9 @@ router.post('/lessons', adminAuth, [
     body("link").isURL().withMessage("Valid link is required"),
     body("id").optional().custom((value) => {
         if (value !== null && !/^[0-9a-fA-F]{24}$/.test(value)) {
-            throw new Error("Invalid group ID");
+            throw new Error("Invalid group ID")
         }
-        return true;
+        return true
     }),
     body("direction")
         .if((value, { req }) => !req.body.id)
