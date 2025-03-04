@@ -3,8 +3,8 @@ const router = Router()
 const {
     getPosts
 } = require('../../controllers/bot-controllers/post.controller')
-const { verifyAdminToken } = require('../../middlewares/authorization')
+const { verifyTelegramKey } = require('../../middlewares/authorization')
 
-router.get('/posts', verifyAdminToken, getPosts)
+router.get('/posts', verifyTelegramKey, getPosts)
 
 module.exports = router
