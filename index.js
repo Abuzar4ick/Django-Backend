@@ -30,9 +30,10 @@ app.use('/api',
 )
 app.use('/api/admin', registerLimiter, require('./routers/register.router'))
 app.use('/bot',
-    require('./routers/bot-routers/groups.router'))
-    require('./routers/bot-routers/lessons.router')
+    require('./routers/bot-routers/groups.router'),
+    require('./routers/bot-routers/lessons.router'),
     require('./routers/bot-routers/users.router')
+)
 
 app.use(error)
 
