@@ -20,14 +20,12 @@ router.post('/groups', verifyAdminToken, [
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            })
+            return res.status(400).json({ success: false, errors: errors.array() })
         }
         next()
     }
 ], newGroup)
+
 router.get('/groups', verifyAdminToken, getGroups)
 router.get('/groups/:id', [
     param('id')
@@ -35,28 +33,24 @@ router.get('/groups/:id', [
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            })
+            return res.status(400).json({ success: false, errors: errors.array() })
         }
         next()
     }
 ], oneGroup)
+
 router.delete('/groups/:id', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            })
+            return res.status(400).json({ success: false, errors: errors.array() })
         }
         next()
     }
 ], deleteGroup)
+
 router.patch('/groups/:id', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
@@ -67,14 +61,12 @@ router.patch('/groups/:id', verifyAdminToken, [
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            })
+            return res.status(400).json({ success: false, errors: errors.array() })
         }
         next()
     }
 ], updateGroup)
+
 router.patch('/groups/:id/status', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
@@ -84,24 +76,19 @@ router.patch('/groups/:id/status', verifyAdminToken, [
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            })
+            return res.status(400).json({ success: false, errors: errors.array() })
         }
         next()
     }
 ], updateGroupStatus)
+
 router.patch('/groups/:id/users', verifyAdminToken, [
     body('users')
         .isArray({ min: 1 }).withMessage('Users must be an array with at least one user ID'),
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            })
+            return res.status(400).json({ success: false, errors: errors.array() })
         }
         next()
     }

@@ -26,13 +26,15 @@ connectMongo()
 app.use('/api',
     require('./routers/lessons.router'),
     require('./routers/group.router'),
-    require('./routers/user.router')
+    require('./routers/user.router'),
+    require('./routers/post.router')
 )
 app.use('/api/admin', registerLimiter, require('./routers/register.router'))
 app.use('/bot',
     require('./routers/bot-routers/groups.router'),
     require('./routers/bot-routers/lessons.router'),
-    require('./routers/bot-routers/users.router')
+    require('./routers/bot-routers/users.router'),
+    require('./routers/bot-routers/post.router')
 )
 
 app.use(error)

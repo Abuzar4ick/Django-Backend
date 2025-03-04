@@ -44,14 +44,12 @@ router.get('/lessons/:id', verifyAdminToken, [
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            })
+            return res.status(400).json({ success: false, errors: errors.array() })
         }
         next()
     }
 ], oneLesson)
+
 router.patch('/lessons/:id', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
@@ -62,24 +60,19 @@ router.patch('/lessons/:id', verifyAdminToken, [
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            })
+            return res.status(400).json({ success: false, errors: errors.array() })
         }
         next()
     }
 ],  updateLesson)
+
 router.delete('/lessons/:id', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            })
+            return res.status(400).json({ success: false, errors: errors.array() })
         }
         next()
     }
