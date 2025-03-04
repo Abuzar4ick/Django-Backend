@@ -8,12 +8,16 @@ const {
     oneLesson,
     getFreeLessons
 } = require('../controllers/lessons.controller')
-const adminAuth = require('../middlewares/adminAuth')
+const { verifyAdminToken } = require('../middlewares/authorization')
 const { body, param, validationResult } = require('express-validator')
 
-router.post('/lessons', adminAuth, [
-    body("title").notEmpty().withMessage("Title is required"),
-    body("link").isURL().withMessage("Valid link is required"),
+router.post('/lessons', verifyAdminToken, [
+    body("title")
+        .notEmpty().withMessage("Title is required"),
+    body("link")
+        .isURL().withMessage("Valid link is required"),
+    body('description')
+        .notEmpty().withMessage('Description is required'),
     body("id").optional().custom((value) => {
         if (value !== null && !/^[0-9a-fA-F]{24}$/.test(value)) {
             throw new Error("Invalid group ID")
@@ -33,7 +37,7 @@ router.post('/lessons', adminAuth, [
     }
 ], newLesson)
 
-router.get('/lessons', adminAuth, getLessons)
+router.get('/lessons', verifyAdminToken, getLessons)
 router.get('/lessons/:id', adminAuth, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
@@ -48,7 +52,7 @@ router.get('/lessons/:id', adminAuth, [
         next()
     }
 ], oneLesson)
-router.patch('/lessons/:id', adminAuth, [
+router.patch('/lessons/:id', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     body('title')
@@ -66,7 +70,7 @@ router.patch('/lessons/:id', adminAuth, [
         next()
     }
 ],  updateLesson)
-router.delete('/lessons/:id', adminAuth, [
+router.delete('/lessons/:id', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     (req, res, next) => {
@@ -80,6 +84,6 @@ router.delete('/lessons/:id', adminAuth, [
         next()
     }
 ], deleteLesson)
-router.get('/free/lessons', adminAuth, getFreeLessons)
+router.get('/free/lessons', verifyAdminToken, getFreeLessons)
 
 module.exports = router

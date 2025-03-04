@@ -9,6 +9,10 @@ const lessonSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     groupId: {
         type: Schema.Types.ObjectId,
         ref: 'Group',
@@ -16,7 +20,7 @@ const lessonSchema = new Schema({
     },
     direction: {
         type: String,
-        enum: ['Frontend', 'Backend', 'Design', 'Python'],
+        enum: ['Frontend', 'Backend', 'Design', 'Python', 'All'],
         required: true
     }
 })

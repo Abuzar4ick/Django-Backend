@@ -3,29 +3,6 @@ const groupSchema = require('../models/group.model')
 const ErrorResponse = require('../utils/errorResponse')
 const asyncHandle = require('../middlewares/async')
 
-// Router: /user/register
-// Method: POST
-// Description: User register
-exports.userRegister = asyncHandle(async (req, res, next) => {
-    const { first_name, last_name, phone_number, direction, groupId, telegram_id } = req.body
-
-    const findUser = await userSchema.findOne({ phone_number })
-    const findByTelegram = await userSchema.findOne({ telegram_id })
-    if (findUser || findByTelegram) return next(new ErrorResponse('User already exist.', 400));
-
-    await userSchema.create({
-        first_name,
-        last_name,
-        phone_number,
-        direction,
-        groupId,
-        telegram_id
-    })
-    res.status(201).json({
-        success: true,
-        message: 'User successfully created.'
-    })
-})
 
 // Router: /users
 // Method: GET

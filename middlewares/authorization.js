@@ -3,12 +3,17 @@ const ErrorResponse = require("../utils/errorResponse")
 
 const { JWT_SECRET, TELEGRAM_KEY } = process.env
 
-const adminAuth = (req, res, next) => {
-    const authHeader = req.headers.authorization
+const verifyTelegramKey = (req, res, next) => {
     const telegramKey = req.headers["telegram-key"]
-
     if (telegramKey === TELEGRAM_KEY) return next()
-    if (!authHeader || !authHeader.startsWith("Bearer ")) return next(new ErrorResponse("No token provided", 401));
+    next(new ErrorResponse("Invalid Telegram key", 401))
+}
+
+const verifyAdminToken = (req, res, next) => {
+    const authHeader = req.headers.authorization
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return next(new ErrorResponse("No token provided", 401))
+    }
 
     const token = authHeader.split(" ")[1]
     try {
@@ -20,4 +25,7 @@ const adminAuth = (req, res, next) => {
     }
 }
 
-module.exports = adminAuth
+module.exports = {
+    verifyTelegramKey,
+    verifyAdminToken
+}

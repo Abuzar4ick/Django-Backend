@@ -9,10 +9,10 @@ const {
     updateGroupStatus,
     updateUsers
 } = require('../controllers/group.controller')
-const adminAuth = require('../middlewares/adminAuth')
+const { verifyAdminToken } = require('../middlewares/authorization')
 const { body, param, validationResult } = require('express-validator')
 
-router.post('/groups', adminAuth, [
+router.post('/groups', verifyAdminToken, [
     body('title')
         .isLength({ min: 1 }).withMessage('The group title must contain at least one letter'),
     body('direction')
@@ -28,7 +28,7 @@ router.post('/groups', adminAuth, [
         next()
     }
 ], newGroup)
-router.get('/groups', adminAuth, getGroups)
+router.get('/groups', verifyAdminToken, getGroups)
 router.get('/groups/:id', [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
@@ -43,7 +43,7 @@ router.get('/groups/:id', [
         next()
     }
 ], oneGroup)
-router.delete('/groups/:id', adminAuth, [
+router.delete('/groups/:id', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     (req, res, next) => {
@@ -57,7 +57,7 @@ router.delete('/groups/:id', adminAuth, [
         next()
     }
 ], deleteGroup)
-router.patch('/groups/:id', adminAuth, [
+router.patch('/groups/:id', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     body('title')
@@ -75,7 +75,7 @@ router.patch('/groups/:id', adminAuth, [
         next()
     }
 ], updateGroup)
-router.patch('/groups/:id/status', adminAuth, [
+router.patch('/groups/:id/status', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     body('status')
@@ -92,7 +92,7 @@ router.patch('/groups/:id/status', adminAuth, [
         next()
     }
 ], updateGroupStatus)
-router.patch('/groups/:id/users', adminAuth, [
+router.patch('/groups/:id/users', verifyAdminToken, [
     body('users')
         .isArray({ min: 1 }).withMessage('Users must be an array with at least one user ID'),
     (req, res, next) => {
