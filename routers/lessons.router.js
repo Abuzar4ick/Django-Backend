@@ -38,7 +38,7 @@ router.post('/lessons', verifyAdminToken, [
 ], newLesson)
 
 router.get('/lessons', verifyAdminToken, getLessons)
-router.get('/lessons/:id', adminAuth, [
+router.get('/lessons/:id', verifyAdminToken, [
     param('id')
         .isMongoId().withMessage('Must be a valid MongoDB ObjectId'),
     (req, res, next) => {
