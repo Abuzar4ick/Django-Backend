@@ -58,7 +58,7 @@ exports.updateLesson = asyncHandle(async (req, res, next) => {
     const { id } = req.params
     const { title, link } = req.body
 
-    const updatedLesson = await lessonSchema.findByIdAndUpdate(id, { title, link })
+    const updatedLesson = await lessonSchema.findByIdAndUpdate(id, { title, link }, { new: true })
     if (!updatedLesson) return next(new ErrorResponse('Lesson not found', 404));
     res.status(200).json({
         success: true,

@@ -8,7 +8,7 @@
     "start": "node index.js",
     "test": "jest"
   },
-  "author": "Raxmonov Abuzar && Suvonov Shohjohon",
+  "author": "Raxmonov Abuzar",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^3.0.2",

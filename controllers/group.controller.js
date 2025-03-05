@@ -69,7 +69,7 @@ exports.deleteGroup = asyncHandle(async (req, res, next) => {
 exports.updateGroup = asyncHandle(async (req, res, next) => {
     const { id } = req.params
     const { title, direction } = req.body
-    const updatedGroup = await groupSchema.findByIdAndUpdate(id, { title, direction })
+    const updatedGroup = await groupSchema.findByIdAndUpdate(id, { title, direction }, { new: true })
     if (!updatedGroup) return next(new ErrorResponse('Group not found.', 404));
     res.status(200).json({
         success: true,
@@ -83,7 +83,7 @@ exports.updateGroup = asyncHandle(async (req, res, next) => {
 exports.updateGroupStatus = asyncHandle(async (req, res, next) => {
     const { id } = req.params
     const { status } = req.body
-    const updatedGroup = await groupSchema.findByIdAndUpdate(id, { status })
+    const updatedGroup = await groupSchema.findByIdAndUpdate(id, { status }, { new: true })
     if (!updatedGroup) return next(new ErrorResponse('Group not found', 404));
     res.status(200).json({
         success: true,
@@ -102,7 +102,7 @@ exports.updateUsers = asyncHandle(async (req, res, next) => {
     if (!findGroup) return next(new ErrorResponse('Group not found', 404));
 
     await Promise.all(users.map((userId) => 
-        userSchema.findByIdAndUpdate(userId, { groupId: id })
+        userSchema.findByIdAndUpdate(userId, { groupId: id }, { new: true })
     ))
 
     res.status(200).json({
