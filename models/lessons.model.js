@@ -23,6 +23,6 @@ const lessonSchema = new Schema({
         enum: ['Frontend', 'Backend', 'Design', 'Python', 'All'],
         required: true
     }
-})
+}, { timestamps: true })
 
 module.exports = model('Lesson', lessonSchema)

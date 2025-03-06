@@ -8,6 +8,6 @@ const postSchema = new Schema({
         type: String,
         required: true
     }
-})
+}, { timestamps: true })
 
 module.exports = model('Post', postSchema)
