@@ -21,7 +21,7 @@ const lessonSchema = new Schema({
     direction: {
         type: String,
         enum: ['Frontend', 'Backend', 'Design', 'Python', 'All'],
-        required: true
+        default: 'All'
     }
 }, { timestamps: true })
 

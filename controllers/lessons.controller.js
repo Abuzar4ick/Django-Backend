@@ -9,6 +9,7 @@ const asyncHandle = require('../middlewares/async')
 exports.newLesson = asyncHandle(async (req, res, next) => {
     const { title, link, description, id, direction: bodyDirection } = req.body
 
+
     let groupId = null
     let direction = bodyDirection
 

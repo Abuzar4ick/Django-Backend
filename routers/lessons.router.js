@@ -13,21 +13,18 @@ const { body, param, validationResult } = require('express-validator')
 
 router.post('/lessons', verifyAdminToken, [
     body("title")
+        .trim()
         .notEmpty().withMessage("Title is required"),
     body("link")
+        .trim()
         .isURL().withMessage("Valid link is required"),
-    body('description')
-        .notEmpty().withMessage('Description is required'),
-    body("id").optional().custom((value) => {
-        if (value !== null && !/^[0-9a-fA-F]{24}$/.test(value)) {
-            throw new Error("Invalid group ID")
-        }
-        return true
-    }),
-    body("direction")
-        .if((value, { req }) => !req.body.id)
-        .notEmpty()
-        .withMessage("Direction is required when groupId is null"),
+    body("description")
+        .trim()
+        .notEmpty().withMessage("Description is required"),
+    body("id")
+        .optional()
+        .isMongoId().withMessage("Invalid group ID"),
+    
     (req, res, next) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
