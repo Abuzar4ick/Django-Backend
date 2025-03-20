@@ -15,7 +15,7 @@ router.post('/user/register', verifyTelegramKey, [
             .notEmpty().withMessage('Last name is required'),
         body('phone_number')
             .notEmpty().withMessage('Phone number is required')
-            .isMobilePhone().withMessage('Invalid phone number'),
+            .matches(/^\+998\d{9}$/).withMessage('Invalid Uzbekistan phone number'),
         body('direction')
             .notEmpty().withMessage('Direction is required'),
         body('telegram_id')

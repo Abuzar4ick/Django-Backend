@@ -1,5 +1,6 @@
 const asyncHandle = require('../../middlewares/async')
 const userSchema = require('../../models/users.model')
+const ErrorResponse = require('../../utils/errorResponse')
 
 // Router: Get all users
 // Method: GET
