@@ -36,3 +36,18 @@ exports.userRegister = asyncHandle(async (req, res, next) => {
         message: 'User successfully created.'
     })
 })
+
+// Router: /users/:telegramId
+// Method: DELETE
+// Description: Delete user by telegram id
+exports.deleteUser = asyncHandle(async (req, res, next) => {
+    const { telegramId } = req.body
+
+    const deletedUser = await userSchema.findByIdAndDelete(telegramId)
+    if (!deletedUser) return next(new ErrorResponse('User with this ID not found', 404));
+
+    res.status(200).json({
+        success: true,
+        message: "User deleted successfully."
+    })
+})

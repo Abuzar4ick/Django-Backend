@@ -1,12 +1,19 @@
 const jwt = require("jsonwebtoken")
+const bcrypt = require('bcryptjs')
 const ErrorResponse = require("../utils/errorResponse")
 
 const { JWT_SECRET, TELEGRAM_KEY } = process.env
 
 const verifyTelegramKey = (req, res, next) => {
     const telegramKey = req.headers["telegram-key"]
-    if (telegramKey === TELEGRAM_KEY) return next()
-    next(new ErrorResponse("Invalid Telegram key", 401))
+    if (!telegramKey) {
+        return next(new ErrorResponse("No Telegram key provided", 401))
+    }
+
+    const isMatch = bcrypt.compare(telegramKey, TELEGRAM_KEY)
+    if (!isMatch) {
+        return next(new ErrorResponse("Invalid Telegram key", 401))
+    }
 }
 
 const verifyAdminToken = (req, res, next) => {

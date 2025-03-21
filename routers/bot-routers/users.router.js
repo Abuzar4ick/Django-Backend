@@ -2,7 +2,8 @@ const { Router } = require('express')
 const router = Router()
 const {
     getUsers,
-    userRegister
+    userRegister,
+    deleteUser
 } = require('../../controllers/bot-controllers/users.controller')
 const { verifyTelegramKey } = require('../../middlewares/authorization')
 const { body, validationResult } = require('express-validator')
@@ -32,5 +33,7 @@ router.post('/user/register', verifyTelegramKey, [
             next()
         }
 ], userRegister)
+
+router.delete('/users/:telegramId', verifyTelegramKey, deleteUser)
 
 module.exports = router
