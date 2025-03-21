@@ -43,7 +43,7 @@ exports.userRegister = asyncHandle(async (req, res, next) => {
 exports.deleteUser = asyncHandle(async (req, res, next) => {
     const { telegramId } = req.body
 
-    const deletedUser = await userSchema.findByIdAndDelete(telegramId)
+    const deletedUser = await userSchema.findOneAndDelete({ telegram_id: telegramId })
     if (!deletedUser) return next(new ErrorResponse('User with this ID not found', 404));
 
     res.status(200).json({
